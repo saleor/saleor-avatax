@@ -14,7 +14,8 @@ export const getFormDefaultAddress = (
 export const getFormDefaultValues = (
   configuration: ChannelConfigurationPayload | undefined
 ): ChannelConfigurationForm => ({
-  apiKey: configuration?.apiKey || "",
+  account: configuration?.account || "",
+  password: configuration?.password || "",
   active: configuration?.active || false,
   sandbox: configuration?.sandbox || true,
   ...getFormDefaultAddress(configuration),
