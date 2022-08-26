@@ -1,5 +1,7 @@
 # Saleor Avatax App
 
+> **Warning** The app is work in progress. Not ready to use.
+
 The sales tax calculation with using [Avatax API](https://developer.avalara.com/avatax/).
 
 The app uses synchronous webhooks: `checkout-calculate-taxes`, `order-calculate-taxes`, to calculate sales taxes for Saleor.
