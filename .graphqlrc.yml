@@ -1,0 +1,17 @@
+schema: http://127.0.0.1:8000/graphql/
+documents: graphql/**/*.graphql
+extensions:
+  codegen:
+    overwrite: true
+    generates:
+      generated/graphql.ts:
+        plugins:
+          - typescript
+          - typescript-operations
+          - urql-introspection
+          - typescript-urql
+        config:
+          scalars:
+            JSONString: string
+            UUID: string
+          dedupeOperationSuffix: true # Prevent suffix duplication in generated names
