@@ -62,7 +62,7 @@ Commands `build` and `dev` would generate schema and typed functions using Saleo
 
 ### ENVs:
 
-- `SETTINGS_ENCRYPTION_SECRET` - used to encrypt/decrypt secret data (like APIKey) that is stored in Saleor's App's private metadata.
+- `SETTINGS_ENCRYPTION_SECRET` - used to encrypt/decrypt secret data (like Password) that is stored in Saleor's App's private metadata.
 - `SALEOR_DOMAIN ` - Only declared Saleor domain will be allowed to fetch taxes from the app.
 
 ## Learn more about Apps

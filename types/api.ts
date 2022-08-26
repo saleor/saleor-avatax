@@ -7,7 +7,8 @@ export type ConfigurationPayloadShipFrom = {
 };
 
 export interface ChannelConfigurationBase {
-  apiKey: string;
+  account: string
+  password: string;
   active: boolean;
   sandbox: boolean;
 }
