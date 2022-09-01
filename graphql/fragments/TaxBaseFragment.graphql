@@ -6,6 +6,8 @@ fragment TaxBaseLineSubscripton on TaxableObjectLine {
       id
       productVariant: variant {
         id
+        sku
+        name
         product {
           metafield(key: "avatax_tax_code")
           productType {
@@ -16,6 +18,8 @@ fragment TaxBaseLineSubscripton on TaxableObjectLine {
     }
     ... on OrderLine {
       id
+      productSku
+      productName
       variant {
         id
         product {
@@ -28,9 +32,6 @@ fragment TaxBaseLineSubscripton on TaxableObjectLine {
     }
   }
   quantity
-  unitPrice {
-    amount
-  }
   totalPrice {
     amount
   }
@@ -46,6 +47,18 @@ fragment TaxBaseSubscription on TaxableObject {
   currency
   channel {
     slug
+  }
+  pricesEnteredWithTax
+  sourceObject{
+    __typename
+    ... on Order{
+      id
+      date: updatedAt
+    }
+    ... on Checkout{
+      id
+      date: lastChange
+    }
   }
   discounts {
     ...TaxDiscountSubscription
