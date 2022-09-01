@@ -65,6 +65,7 @@ export const prepareResponseFromMetadata = (
       active,
       account,
       password,
+      companyCode,
       sandbox,
       shipFromCity,
       shipFromCountry,
@@ -78,6 +79,7 @@ export const prepareResponseFromMetadata = (
       [channelSlug]: {
         active: active || false,
         account: account || "",
+        companyCode: companyCode || "DEFAULT",
         password: password || "",
         sandbox: sandbox || true,
         shipFromCity: shipFromCity || "",
@@ -127,10 +129,41 @@ export const validateConfigurationBeforeSave = (
     .map(([channelSlug]) => channelSlug);
   if (activeWithoutApiKeys.length !== 0) {
     console.log(
-      "Avatax cannot be active for the channel as password is missing."
+      `Avatax cannot be active for the channels ${activeWithoutApiKeys.toString()} as password is missing.`
     );
     return {
-      message: `Avatax App cannot be active for channel: ${activeWithoutApiKeys.toString()}. The password is missing.`,
+      message: `Avatax App cannot be active for channel: ${activeWithoutApiKeys.toString()}. 
+      The password is missing.`,
+      isValid: false,
+    };
+  }
+  const activeWithoutAccount = Object.entries(channelsConfiguration)
+    .filter(
+      ([, configuration]) => configuration.active && !configuration.account
+    )
+    .map(([channelSlug]) => channelSlug);
+  if (activeWithoutAccount.length !== 0) {
+    console.log(
+      `Avatax cannot be active for the channels ${activeWithoutApiKeys.toString()} as account is missing.`
+    );
+    return {
+      message: `Avatax App cannot be active for channel:
+       ${activeWithoutAccount.toString()}. The account is missing.`,
+      isValid: false,
+    };
+  }
+  const activeWithoutAddress = Object.entries(channelsConfiguration)
+  .filter(
+    ([, configuration]) => configuration.active && (!configuration.shipFromCountry || !configuration.shipFromZip)
+  )
+  .map(([channelSlug]) => channelSlug);
+  if (activeWithoutAddress.length !== 0) {
+    console.log(
+      `Avatax cannot be active for the channels ${activeWithoutApiKeys.toString()} as address is not correct.`
+    );
+    return {
+      message: `Avatax App cannot be active for channel:
+       ${activeWithoutAddress.toString()}. The ship from address is not correct.`,
       isValid: false,
     };
   }

@@ -16,6 +16,7 @@ export const getFormDefaultValues = (
 ): ChannelConfigurationForm => ({
   account: configuration?.account || "",
   password: configuration?.password || "",
+  companyCode: configuration?.companyCode || "DEFAULT",
   active: configuration?.active || false,
   sandbox: configuration?.sandbox || true,
   ...getFormDefaultAddress(configuration),

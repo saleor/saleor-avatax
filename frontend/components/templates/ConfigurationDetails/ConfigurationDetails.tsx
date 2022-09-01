@@ -138,6 +138,22 @@ const ConfigurationDetails: React.FC<ConfigurationDetailsProps> = ({
                 />
                 <VerticalSpacer />
                 <Controller
+                  name="companyCode"
+                  control={control}
+                  defaultValue={configuration?.companyCode}
+                  render={({ field }) => (
+                    <TextField
+                      label="Company code"
+                      fullWidth
+                      name={field.name}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                  )}
+                />
+                <VerticalSpacer />
+                <Controller
                   name="active"
                   control={control}
                   defaultValue={configuration?.active}

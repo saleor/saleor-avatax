@@ -9,6 +9,7 @@ export type ConfigurationPayloadShipFrom = {
 export interface ChannelConfigurationBase {
   account: string
   password: string;
+  companyCode: string;
   active: boolean;
   sandbox: boolean;
 }

@@ -2,13 +2,21 @@ fragment OrderLineFragment on OrderLine {
   productSku
   productName
   quantity
-  unitPrice {
-    net {
-      amount
+  variant {
+    id
+    product {
+      chargeTaxes
+      metafield(key: "avatax_tax_code")
+      productType {
+        metafield(key: "avatax_tax_code")
+      }
     }
   }
   totalPrice {
-    tax {
+    net {
+      amount
+    }
+    gross {
       amount
     }
   }
@@ -16,7 +24,7 @@ fragment OrderLineFragment on OrderLine {
 
 fragment OrderSubscription on Order {
   id
-  userEmail
+  number
   created
   channel {
     id
@@ -28,7 +36,13 @@ fragment OrderSubscription on Order {
   billingAddress {
     ...AddressFragment
   }
+  discounts {
+    amount {
+      amount
+    }
+  }
   total {
+    currency
     net {
       amount
     }
@@ -37,7 +51,7 @@ fragment OrderSubscription on Order {
     }
   }
   shippingPrice {
-    net {
+    gross {
       amount
     }
   }
