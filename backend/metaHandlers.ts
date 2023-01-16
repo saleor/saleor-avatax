@@ -32,11 +32,11 @@ export const prepareMetadataFromRequest = (
           const currentConfiguration =
             currentChannelsConfigurations?.[channelSlug];
           if (
-            currentConfiguration?.apiKey &&
-            configuration.apiKey.startsWith(PLACEHOLDER) &&
-            key === "apiKey"
+            currentConfiguration?.password &&
+            configuration.password.startsWith(PLACEHOLDER) &&
+            key === "password"
           ) {
-            value = currentConfiguration.apiKey;
+            value = currentConfiguration.password;
           }
           return {
             ...result,
@@ -63,7 +63,8 @@ export const prepareResponseFromMetadata = (
     const parsedConfiguration = item ? JSON.parse(item) : {};
     const {
       active,
-      apiKey,
+      account,
+      password,
       sandbox,
       shipFromCity,
       shipFromCountry,
@@ -76,7 +77,8 @@ export const prepareResponseFromMetadata = (
       ...config,
       [channelSlug]: {
         active: active || false,
-        apiKey: apiKey || "",
+        account: account || "",
+        password: password || "",
         sandbox: sandbox || true,
         shipFromCity: shipFromCity || "",
         shipFromCountry: shipFromCountry || "",
@@ -120,15 +122,15 @@ export const validateConfigurationBeforeSave = (
     .filter(
       ([, configuration]) =>
         configuration.active &&
-        (!configuration.apiKey || configuration.apiKey === PLACEHOLDER)
+        (!configuration.password || configuration.password === PLACEHOLDER)
     )
     .map(([channelSlug]) => channelSlug);
   if (activeWithoutApiKeys.length !== 0) {
     console.log(
-      "Avatax cannot be active for the channel as API key is missing."
+      "Avatax cannot be active for the channel as password is missing."
     );
     return {
-      message: `Avatax App cannot be active for channel: ${activeWithoutApiKeys.toString()}. The API Key is missing.`,
+      message: `Avatax App cannot be active for channel: ${activeWithoutApiKeys.toString()}. The password is missing.`,
       isValid: false,
     };
   }

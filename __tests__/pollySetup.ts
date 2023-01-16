@@ -16,8 +16,12 @@ const HEADERS_BLACKLIST = new Set([
 ]);
 const PROTECTED_FIELDS = [
   {
-    field: "apiKey",
+    field: "password",
     replaceValue: "U2FsdGVkX1+vwewxrCWG98Hnr8Qx/MXEZfUmS6IQEIM=",
+  },
+  {
+    field: "account",
+    replaceValue: "123456",
   },
 ];
 const tryParse = (data: string | undefined) => {

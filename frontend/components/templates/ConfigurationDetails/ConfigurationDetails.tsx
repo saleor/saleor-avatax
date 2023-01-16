@@ -106,12 +106,28 @@ const ConfigurationDetails: React.FC<ConfigurationDetailsProps> = ({
             ) : (
               <>
                 <Controller
-                  name="apiKey"
+                  name="account"
                   control={control}
-                  defaultValue={configuration?.apiKey}
+                  defaultValue={configuration?.account}
                   render={({ field }) => (
                     <TextField
-                      label="API Key"
+                      label="Username or account"
+                      fullWidth
+                      name={field.name}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                  )}
+                />
+                <VerticalSpacer />
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue={configuration?.password}
+                  render={({ field }) => (
+                    <TextField
+                      label="Password or license"
                       fullWidth
                       name={field.name}
                       value={field.value}
