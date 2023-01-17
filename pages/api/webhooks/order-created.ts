@@ -9,15 +9,22 @@ import {
 import type { Handler } from "retes";
 import { toNextHandler } from "retes/adapter";
 import { Response } from "retes/response";
+import { createTransaction } from "@/backend/taxHandlers";
+import { getAvataxConfig } from "@/backend/utils";
 
-const handler: Handler = (request) => {
+const handler: Handler = async (request) => {
   const saleorDomain = request.headers[SALEOR_DOMAIN_HEADER];
 
   const body: OrderCreatedEventSubscriptionFragment =
     typeof request.body === "string" ? JSON.parse(request.body) : request.body;
 
   if (body?.__typename === "OrderCreated") {
-    console.log(body)    
+    const order = body.order!;
+    const avataxConfig = await getAvataxConfig(
+      saleorDomain,
+      order.channel.slug
+    );
+    return createTransaction(order, avataxConfig);
   }
   return Response.BadRequest({
     success: false,

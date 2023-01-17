@@ -8,18 +8,20 @@ import type { Handler } from "retes";
 import { toNextHandler } from "retes/adapter";
 import { Response } from "retes/response";
 import { CalculateTaxesEventSubscriptionFragment } from "@/generated/graphql";
+import { calculateTaxesHandler } from "@/backend/taxHandlers";
 
-const handler: Handler = (request) => {
+const handler: Handler = async (request) => {
   const saleorDomain = request.headers[SALEOR_DOMAIN_HEADER];
   const payload: CalculateTaxesEventSubscriptionFragment =
     typeof request.body === "string" ? JSON.parse(request.body) : request.body;
 
   if (payload?.__typename === "CalculateTaxes") {
     const taxObject = payload.taxBase!;
+    return await calculateTaxesHandler(taxObject, saleorDomain);
   }
   return Response.BadRequest({
+    error: { message: "Incorrect payload event." },
     success: false,
-    message: "Incorrect payload event.",
   });
 };
 

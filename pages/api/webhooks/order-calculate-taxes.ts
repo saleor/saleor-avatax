@@ -8,8 +8,9 @@ import {
 import type { Handler } from "retes";
 import { toNextHandler } from "retes/adapter";
 import { Response } from "retes/response";
+import { calculateTaxesHandler } from "@/backend/taxHandlers";
 
-const handler: Handler = (request) => {
+const handler: Handler = async (request) => {
   const saleorDomain = request.headers[SALEOR_DOMAIN_HEADER];
 
   const payload: CalculateTaxesEventSubscriptionFragment =
@@ -17,6 +18,7 @@ const handler: Handler = (request) => {
 
   if (payload?.__typename === "CalculateTaxes") {
     const taxObject = payload.taxBase!;
+    return await calculateTaxesHandler(taxObject, saleorDomain);
   }
   return Response.BadRequest({
     success: false,
