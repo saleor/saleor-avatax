@@ -1,3 +1,6 @@
+> [!WARNING]
+> This app has been replaced with [Taxes App](https://docs.saleor.io/docs/3.x/developer/app-store/apps/taxes/overview)
+
 # Saleor Avatax App
 
 > **Warning** The app is work in progress. Not ready to use.
